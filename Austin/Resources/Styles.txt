@@ -1,0 +1,226 @@
+BODY
+{
+	color: Black;
+	background-color: white;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-weight: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	word-spacing: normal;
+}
+
+H1, H2, H3, H4, H5, TH, THEAD, TFOOT
+{
+	color: #003366;
+	background-color: inherit;
+}
+
+H1
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 2em;
+	font-weight: 700;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+H2
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.75em;
+	font-weight: 700;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+H3
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.58em;
+	font-weight: 500;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+H4
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.33em;
+	font-weight: 500;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+H5, DT
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	font-weight: 700;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+H6
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: .8em;
+	font-weight: 700;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+TABLE, TR, TH, TD, TFOOT, THEAD
+{
+	padding-bottom: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 4px;
+	border-style: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+TABLE
+{
+	color: #333333;
+	background-color: inherit;
+}
+
+TABLE.GridView
+{
+	border-width: 0;
+}
+
+TR.Row
+{
+	background-color: #EFF3FB;
+	color: inherit;
+}
+
+TR.AlternatingRow
+{
+	background-color: White;
+	color: inherit;
+}
+
+TR.Header
+{
+	background-color: #B0CAF0;
+	font-weight: bold;
+	color: White;
+}
+
+TR.Footer
+{
+	background-color: #507CD1;
+	font-weight: bold;
+	color: White;
+}
+
+TR.SelectedRow
+{
+	color: White;
+	background-color: #333333;
+	font-weight: bold;
+}
+
+TR.Pager
+{
+	background-color: #2461BF;
+	color: White;
+	text-align: center;
+}
+
+TR.EditRow
+{
+	color: inherit;
+	background-color: #2461BF;
+}
+
+A:link
+{
+	text-decoration: none;
+	color: #3333cc;
+	background-color: inherit;
+}
+
+A:visited
+{
+	text-decoration: none;
+	color: #333399;
+	background-color: inherit;
+}
+
+A:active
+{
+	text-decoration: none;
+	color: #333399;
+	background-color: inherit;
+}
+
+A:hover
+{
+	text-decoration: underline;
+	color: #3333cc;
+	background-color: inherit;
+}
+
+BLOCKQUOTE, PRE
+{
+	font-family: "Courier New" , monospace;
+}
+
+HR
+{
+	width: 100%;
+	border-width: 0;
+	height: 0.1em;
+	background-color: Black;
+	color: black;
+}
+
+#Header
+{
+}
+
+#Sidebar
+{
+	float: right;
+	border: solid 0.1em Black;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+#Content
+{
+}
+
+#Bottom
+{
+	width: 100%;
+	clear: both;
+}
+
+#Copyright
+{
+	text-align: center;
+	font-style: italic;
+}

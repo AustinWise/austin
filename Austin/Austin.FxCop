@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.35" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">http://www.gotdotnet.com/team/fxcop//xsl/1.35/FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-us" />
+  <VersionAware>False</VersionAware>
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+ </ProjectOptions>
+ <Targets>
+  <AssemblyReferenceDirectories>
+   <Directory>$(ProjectDir)/Austin/bin/Debug/</Directory>
+  </AssemblyReferenceDirectories>
+  <Target Name="$(ProjectDir)/Austin/bin/Debug/Austin.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.35">
+  <Namespaces>
+   <Namespace Name="Austin.Security.Cryptography">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2006-02-13 16:53:07Z">
+      <Issue>
+       <Item>Austin.Security.Cryptography</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/Austin/bin/Debug/Austin.dll">
+    <Modules>
+     <Module Name="austin.dll">
+      <Namespaces>
+       <Namespace Name="Austin">
+        <Types>
+         <Type Name="NativeMethods">
+          <Members>
+           <Member Name="InternetGetCookie(System.String,System.String,System.Text.StringBuilder,System.Int32&amp;):System.Boolean">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2006-02-13 16:55:12Z">
+              <Issue>
+               <Item>NativeMethods.InternetGetCookie(String, String, StringBuilder, Int32&amp;):Boolean</Item>
+              </Issue>
+             </Message>
+             <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2006-02-13 16:53:07Z" FixCategory="NonBreaking">
+              <Issue Name="Return">
+               <Item>NativeMethods.InternetGetCookie(String, String, StringBuilder, Int32&amp;):Boolean</Item>
+               <Item>1</Item>
+               <Item>32-bit</Item>
+               <Item>4</Item>
+               <Item>System.Boolean</Item>
+              </Issue>
+              <Issue Name="Return">
+               <Item>NativeMethods.InternetGetCookie(String, String, StringBuilder, Int32&amp;):Boolean</Item>
+               <Item>1</Item>
+               <Item>64-bit</Item>
+               <Item>4</Item>
+               <Item>System.Boolean</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="NetMessageBufferSend(System.String,System.String,System.String,System.String,System.Int32):System.Int32">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>NativeMethods.NetMessageBufferSend(String, String, String, String, Int32):Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="NetServerEnum(System.String,System.Int32,System.IntPtr&amp;,System.Int32,System.Int32&amp;,System.Int32&amp;,Austin.Net.SV_101_TYPES,System.String,System.Int32):System.Int32">
+            <Messages>
+             <Message Id="8" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2006-02-13 16:53:07Z" FixCategory="NonBreaking">
+              <Issue Name="Parameter">
+               <Item>resume_handle</Item>
+               <Item>NativeMethods.NetServerEnum(String, Int32, IntPtr&amp;, Int32, Int32&amp;, Int32&amp;, SV_101_TYPES, String, Int32):Int32</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>System.Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="NetShareEnum(System.Text.StringBuilder,System.Int32,System.IntPtr&amp;,System.UInt32,System.Int32&amp;,System.Int32&amp;,System.Int32&amp;):System.Int32">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>NativeMethods.NetShareEnum(StringBuilder, Int32, IntPtr&amp;, UInt32, Int32&amp;, Int32&amp;, Int32&amp;):Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WNetGetUniversalName(System.String,System.Int32,Austin.NativeMethods+UNIVERSAL_NAME_INFO&amp;,System.Int32&amp;):System.Int32">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>NativeMethods.WNetGetUniversalName(String, Int32, UNIVERSAL_NAME_INFO&amp;, Int32&amp;):Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WNetGetUniversalName(System.String,System.Int32,System.IntPtr,System.Int32&amp;):System.Int32">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>NativeMethods.WNetGetUniversalName(String, Int32, IntPtr, Int32&amp;):Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Austin.Net">
+        <Types>
+         <Type Name="DownloadManager">
+          <Members>
+           <Member Name="GetCookieContainerForUrl(System.Uri):System.Net.CookieContainer">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2006-02-13 16:55:12Z">
+              <Issue>
+               <Item>DownloadManager.GetCookieContainerForUrl(Uri):CookieContainer</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetRequest(Austin.Net.DownloadRequest):System.Net.WebRequest">
+            <Messages>
+             <Message Id="System.ArgumentException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>DownloadManager.GetRequest(DownloadRequest):WebRequest</Item>
+               <Item>1</Item>
+               <Item>ArgumentException.ArgumentException(String)</Item>
+               <Item>The address in in the blacklist.</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="RetrieveIECookiesForUrl(System.String):System.String">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2006-02-13 16:55:12Z">
+              <Issue>
+               <Item>DownloadManager.RetrieveIECookiesForUrl(String):String</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DownloadRequest">
+          <Members>
+           <Member Name=".ctor(System.Uri)">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>DownloadRequest.DownloadRequest(Uri)</Item>
+               <Item>m_shouldCache</Item>
+               <Item>System.Boolean</Item>
+               <Item>false</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Referer">
+            <Messages>
+             <Message Id="Referer" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2006-02-13 16:53:07Z">
+              <Issue Name="Member">
+               <Item>Referer</Item>
+               <Item>DownloadRequest.Referer:String</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="HttpServer">
+          <Members>
+           <Member Name="__Index(System.Xml.XmlWriter):System.Void">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2006-02-13 16:53:07Z">
+              <Issue Name="Member">
+               <Item>__Index</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="__View(System.Xml.XmlWriter,System.String):System.Void">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2006-02-13 16:53:07Z">
+              <Issue Name="Member">
+               <Item>__View</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Dispose():System.Void">
+            <Messages>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2006-02-13 16:53:07Z">
+              <Issue Name="DisposeImplementation">
+               <Item>HttpServer.Dispose():Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ProductUrl">
+            <Accessors>
+             <Accessor Name="get_ProductUrl():System.Uri">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2006-02-13 16:53:07Z">
+                <Issue>
+                 <Item>HttpServer.get_ProductUrl():Uri</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="pump():System.Void">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>HttpServer.pump():Void</Item>
+               <Item>System.Object</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Start():System.Void">
+            <Messages>
+             <Message Id="Austin.Net.HttpServerException.#ctor(System.String,System.Exception)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>HttpServer.Start():Void</Item>
+               <Item>1</Item>
+               <Item>HttpServerException.HttpServerException(String, Exception)</Item>
+               <Item>Failed to start server.</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="writeContent(Austin.Net.HttpServerMethod,System.Collections.Specialized.NameValueCollection,System.Xml.XmlWriter):System.Void">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>HttpServer.writeContent(HttpServerMethod, NameValueCollection, XmlWriter):Void</Item>
+               <Item>System.Exception</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WriteError(System.Xml.XmlWriter,System.String):System.Void">
+            <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>'writer'</Item>
+               <Item>HttpServer.WriteError(XmlWriter, String):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WriteFooter(System.Xml.XmlWriter):System.Void">
+            <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>'writer'</Item>
+               <Item>HttpServer.WriteFooter(XmlWriter):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WriteHeader(System.Xml.XmlWriter,System.String,System.String):System.Void">
+            <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>'method'</Item>
+               <Item>HttpServer.WriteHeader(XmlWriter, String, String):Void</Item>
+              </Issue>
+              <Issue>
+               <Item>'writer'</Item>
+               <Item>HttpServer.WriteHeader(XmlWriter, String, String):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WritePageEnd(System.Xml.XmlWriter):System.Void">
+            <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>'writer'</Item>
+               <Item>HttpServer.WritePageEnd(XmlWriter):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WritePageStart(System.Xml.XmlWriter,System.String):System.Void">
+            <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>'writer'</Item>
+               <Item>HttpServer.WritePageStart(XmlWriter, String):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="HttpServerMethodParameter">
+          <Members>
+           <Member Name=".cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Austin.Net.HttpServerMethodParameter</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Share">
+          <Members>
+           <Member Name=".cctor()">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Share.Share()</Item>
+               <Item>_local</Item>
+               <Item>System.Collections.ObjectModel.ReadOnlyCollection`1&lt;Austin.Net.Share&gt;</Item>
+               <Item>null</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="EnumerateShares(System.String):System.Collections.Generic.List`1&lt;Austin.Net.Share&gt;">
+            <Messages>
+             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Share.EnumerateShares(String):List`1&lt;Austin.Net.Share&gt;</Item>
+               <Item>System.String.ToUpper</Item>
+               <Item>System.String.ToUpper(System.Globalization.CultureInfo)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="IsValidFilePath(System.String):System.Boolean">
+            <Messages>
+             <Message Id="System.Char.ToUpper(System.Char)" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Share.IsValidFilePath(String):Boolean</Item>
+               <Item>System.Char.ToUpper(System.Char)</Item>
+               <Item>System.Char.ToUpper(System.Char,System.Globalization.CultureInfo)</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>'fileName'</Item>
+               <Item>Share.IsValidFilePath(String):Boolean</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="MatchesPath(System.String):System.Boolean">
+            <Messages>
+             <Message Id="System.String.ToLower" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Share.MatchesPath(String):Boolean</Item>
+               <Item>System.String.ToLower</Item>
+               <Item>System.String.ToLower(System.Globalization.CultureInfo)</Item>
+              </Issue>
+              <Issue>
+               <Item>Share.MatchesPath(String):Boolean</Item>
+               <Item>System.String.ToLower</Item>
+               <Item>System.String.ToLower(System.Globalization.CultureInfo)</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>'path'</Item>
+               <Item>Share.MatchesPath(String):Boolean</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ToString():System.String">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Share.ToString():String</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+              <Issue>
+               <Item>Share.ToString():String</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ShareType">
+          <Members>
+           <Member Name="IPC">
+            <Messages>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2006-02-13 16:53:07Z">
+              <Issue Name="Member">
+               <Item>ShareType.IPC</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Austin.Properties">
+        <Types>
+         <Type Name="Resources">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2006-02-13 16:53:07Z">
+            <Issue>
+             <Item>Austin.Properties.Resources</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Austin.Security.Cryptography">
+        <Types>
+         <Type Name="Hash">
+          <Members>
+           <Member Name="CompareTo(System.Object):System.Int32">
+            <Messages>
+             <Message Id="System.ArgumentException.#ctor(System.String,System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Hash.CompareTo(Object):Int32</Item>
+               <Item>1</Item>
+               <Item>ArgumentException.ArgumentException(String, String)</Item>
+               <Item>Must by type of Hash.</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="HashedData">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Hash.HashedData:Byte[]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="m_sync">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2006-02-13 16:53:07Z">
+              <Issue>
+               <Item>Hash.m_sync</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+      <Resources>
+       <Resource Name="Austin.Properties.Resources.resources">
+        <Messages>
+         <Message Id="monospace" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Created="2006-02-13 16:53:07Z">
+          <Issue>
+           <Item>monospace</Item>
+           <Item>Styles</Item>
+           <Item>BODY&#xD;&#xA;{&#xD;&#xA;	color: Black;&#xD;&#xA;	background-color: white;&#xD;&#xA;	font-family: Verdana, Helvetica, sans-serif;&#xD;&#xA;	font-weight: normal;&#xD;&#xA;	letter-spacing: normal;&#xD;&#xA;	text-transform: none;&#xD;&#xA;	word-spacing: normal;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;H1, H2, H3, H4, H5, TH, THEAD, TFOOT&#xD;&#xA;{&#xD;&#xA;	color: #003366;&#xD;&#xA;	background-color: inherit;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;H1&#xD;&#xA;{&#xD;&#xA;	font-family: Verdana, Arial, Helvetica, sans-serif;&#xD;&#xA;	font-size: 2em;&#xD;&#xA;	font-weight: 700;&#xD;&#xA;	font-style: normal;&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	word-spacing: normal;&#xD;&#xA;	letter-spacing: normal;&#xD;&#xA;	text-transform: none;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;H2&#xD;&#xA;{&#xD;&#xA;	font-family: Verdana, Arial, Helvetica, sans-serif;&#xD;&#xA;	font-size: 1.75em;&#xD;&#xA;	font-weight: 700;&#xD;&#xA;	font-style: normal;&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	word-spacing: normal;&#xD;&#xA;	letter-spacing: normal;&#xD;&#xA;	text-transform: none;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;H3&#xD;&#xA;{&#xD;&#xA;	font-family: Verdana, Arial, Helvetica, sans-serif;&#xD;&#xA;	font-size: 1.58em;&#xD;&#xA;	font-weight: 500;&#xD;&#xA;	font-style: normal;&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	word-spacing: normal;&#xD;&#xA;	letter-spacing: normal;&#xD;&#xA;	text-transform: none;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;H4&#xD;&#xA;{&#xD;&#xA;	font-family: Verdana, Arial, Helvetica, sans-serif;&#xD;&#xA;	font-size: 1.33em;&#xD;&#xA;	font-weight: 500;&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	word-spacing: normal;&#xD;&#xA;	letter-spacing: normal;&#xD;&#xA;	text-transform: none;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;H5, DT&#xD;&#xA;{&#xD;&#xA;	font-family: Verdana, Arial, Helvetica, sans-serif;&#xD;&#xA;	font-size: 1em;&#xD;&#xA;	font-weight: 700;&#xD;&#xA;	font-style: normal;&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	word-spacing: normal;&#xD;&#xA;	letter-spacing: normal;&#xD;&#xA;	text-transform: none;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;H6&#xD;&#xA;{&#xD;&#xA;	font-family: Verdana, Arial, Helvetica, sans-serif;&#xD;&#xA;	font-size: .8em;&#xD;&#xA;	font-weight: 700;&#xD;&#xA;	font-style: normal;&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	word-spacing: normal;&#xD;&#xA;	letter-spacing: normal;&#xD;&#xA;	text-transform: none;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TABLE, TR, TH, TD, TFOOT, THEAD&#xD;&#xA;{&#xD;&#xA;	padding-bottom: 4px;&#xD;&#xA;	padding-left: 4px;&#xD;&#xA;	padding-right: 4px;&#xD;&#xA;	padding-top: 4px;&#xD;&#xA;	border-style: none;&#xD;&#xA;	word-spacing: normal;&#xD;&#xA;	letter-spacing: normal;&#xD;&#xA;	text-transform: none;&#xD;&#xA;	font-family: Arial, Helvetica, sans-serif;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TABLE&#xD;&#xA;{&#xD;&#xA;	color: #333333;&#xD;&#xA;	background-color: inherit;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TABLE.GridView&#xD;&#xA;{&#xD;&#xA;	border-width: 0;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TR.Row&#xD;&#xA;{&#xD;&#xA;	background-color: #EFF3FB;&#xD;&#xA;	color: inherit;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TR.AlternatingRow&#xD;&#xA;{&#xD;&#xA;	background-color: White;&#xD;&#xA;	color: inherit;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TR.Header&#xD;&#xA;{&#xD;&#xA;	background-color: #B0CAF0;&#xD;&#xA;	font-weight: bold;&#xD;&#xA;	color: White;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TR.Footer&#xD;&#xA;{&#xD;&#xA;	background-color: #507CD1;&#xD;&#xA;	font-weight: bold;&#xD;&#xA;	color: White;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TR.SelectedRow&#xD;&#xA;{&#xD;&#xA;	color: White;&#xD;&#xA;	background-color: #333333;&#xD;&#xA;	font-weight: bold;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TR.Pager&#xD;&#xA;{&#xD;&#xA;	background-color: #2461BF;&#xD;&#xA;	color: White;&#xD;&#xA;	text-align: center;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;TR.EditRow&#xD;&#xA;{&#xD;&#xA;	color: inherit;&#xD;&#xA;	background-color: #2461BF;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;A:link&#xD;&#xA;{&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	color: #3333cc;&#xD;&#xA;	background-color: inherit;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;A:visited&#xD;&#xA;{&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	color: #333399;&#xD;&#xA;	background-color: inherit;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;A:active&#xD;&#xA;{&#xD;&#xA;	text-decoration: none;&#xD;&#xA;	color: #333399;&#xD;&#xA;	background-color: inherit;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;A:hover&#xD;&#xA;{&#xD;&#xA;	text-decoration: underline;&#xD;&#xA;	color: #3333cc;&#xD;&#xA;	background-color: inherit;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;BLOCKQUOTE, PRE&#xD;&#xA;{&#xD;&#xA;	font-family: "Courier New" , monospace;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;HR&#xD;&#xA;{&#xD;&#xA;	width: 100%;&#xD;&#xA;	border-width: 0;&#xD;&#xA;	height: 0.1em;&#xD;&#xA;	background-color: Black;&#xD;&#xA;	color: black;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;#Header&#xD;&#xA;{&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;#Sidebar&#xD;&#xA;{&#xD;&#xA;	float: right;&#xD;&#xA;	border: solid 0.1em Black;&#xD;&#xA;	padding: 0.5em 0.5em 0.5em 0.5em;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;#Content&#xD;&#xA;{&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;#Bottom&#xD;&#xA;{&#xD;&#xA;	width: 100%;&#xD;&#xA;	clear: both;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;#Copyright&#xD;&#xA;{&#xD;&#xA;	text-align: center;&#xD;&#xA;	font-style: italic;&#xD;&#xA;}</Item>
+           <Item>Austin.Properties.Resources.resources</Item>
+          </Issue>
+         </Message>
+        </Messages>
+       </Resource>
+      </Resources>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">'{0}' appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
+    <Resolution Name="Default">'{0}' is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field '{0}' is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify '{0}' to catch a more specific exception than '{1}' or rethrow the exception.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
+    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization as it will be done automatically by the runtime.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303">
+    <Resolution Name="Default">{0} passes a literal as parameter {1} of a call to {2}. Retrieve the following string argument from a resource table instead: '{3}'</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Member">Correct the spelling of the unrecognized token '{0}' in member name '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="Member">Remove all underscores from member '{0}'.</Resolution>
+   </Rule>
+   <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+    <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in VB), and then returns.</Resolution>
+   </Rule>
+   <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
+    <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705">
+    <Resolution Name="Member">Correct the capitalization of member name '{0}'.</Resolution>
+   </Rule>
+   <Rule TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901">
+    <Resolution Name="Parameter">As it is declared in your code, parameter '{0}' of PInvoke {1} will be {2} bytes wide on {3} platforms. This is not correct, as the actual native declaration of this API indicates it should be {4} bytes wide on {3} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of '{5}'.</Resolution>
+    <Resolution Name="Return">As it is declared in your code, the return type of PInvoke {0} will be {1} bytes wide on {2} platforms. This is not correct, as the actual native declaration of this API indicates it should be {3} bytes wide on {2} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of '{4}'.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
+    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703">
+    <Resolution Name="Default">Correct the spelling of '{0}' in '{1}' == '{2}' contained in resource stream '{3}'.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304">
+    <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide a CultureInfo. This should be replaced with a call to {2}.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide an IFormatProvider. This should be replaced with a call to {2}.</Resolution>
+   </Rule>
+   <Rule TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062">
+    <Resolution Name="Default">Validate parameter {0} passed to externally visible method {1}.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

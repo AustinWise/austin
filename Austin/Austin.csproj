@@ -1,0 +1,89 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F9BA4CE1-536E-42A4-BBB7-5F43EF2EEAD9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Austin</RootNamespace>
+    <AssemblyName>Austin</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MyKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunFxCop>false</RunFxCop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Austin.XML</DocumentationFile>
+    <RunFxCop>false</RunFxCop>
+    <FxCopRules>
+    </FxCopRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ModuleSuppressions.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="Net\Browser.cs" />
+    <Compile Include="Net\Computer.cs" />
+    <Compile Include="Net\DownloadManager.cs" />
+    <Compile Include="Net\DownloadRequest.cs" />
+    <Compile Include="Net\HttpServerMethod.cs" />
+    <Compile Include="Net\HttpServer.cs">
+    </Compile>
+    <Compile Include="Net\HttpServerAttribute.cs" />
+    <Compile Include="Net\HttpServerException.cs" />
+    <Compile Include="Net\HttpServerMethodAttribute.cs" />
+    <Compile Include="Net\HttpServerMethodParameter.cs" />
+    <Compile Include="Net\HttpServerMethodParameterType.cs" />
+    <Compile Include="Net\PLATFORM_ID.cs" />
+    <Compile Include="Net\SERVER_INFO_101.cs" />
+    <Compile Include="Net\Share.cs" />
+    <Compile Include="Net\ShareType.cs" />
+    <Compile Include="Net\SV_101_TYPES.cs" />
+    <Compile Include="Net\UrlTransformation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Security\Cryptography\Hash.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MyKey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HttpServer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Styles.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
