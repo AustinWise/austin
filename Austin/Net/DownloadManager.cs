@@ -10,20 +10,20 @@ namespace Austin.Net
     /// <summary>
     /// Provides an abstract way to download data.
     /// </summary>
-    public static class DownloadManager
+    public class DownloadManager : IDownloadManager
     {
-        private static object sync = new object();
-        private static CookieContainer cookies = new CookieContainer();
+        private object sync = new object();
+        private CookieContainer cookies = new CookieContainer();
 
         #region Special Cases
-        private static Dictionary<string, UrlTransformation> m_spcialCases = new Dictionary<string, UrlTransformation>();
+        private Dictionary<string, UrlTransformation> m_spcialCases = new Dictionary<string, UrlTransformation>();
 
         /// <summary>
         /// Adds a special case to be used by <see cref="Austin.Net.DownloadManager.TransformUrl"/>.
         /// </summary>
         /// <param name="domain">The domain in which the <paramref name="specialCase"/> will apply.</param>
         /// <param name="specialCase">The special <see cref="Austin.Net.UrlTransformation"/> to be called.</param>
-        public static void AddSpecialCase(string domain, UrlTransformation specialCase)
+        public void AddSpecialCase(string domain, UrlTransformation specialCase)
         {
             m_spcialCases.Add(domain, specialCase);
         }
@@ -34,7 +34,7 @@ namespace Austin.Net
         /// </summary>
         /// <param name="url">The <see cref="System.Uri"/> to be transformed.</param>
         /// <returns>A <see cref="System.Uri"/> that may have been transformed.</returns>
-        public static Uri TransformUrl(Uri url)
+        private Uri TransformUrl(Uri url)
         {
             string domain = url.Host;
             while (periodCount(domain) > 1)
@@ -47,7 +47,7 @@ namespace Austin.Net
                 return url;
         }
 
-        private static int periodCount(string str)
+        private int periodCount(string str)
         {
             return str.Length - str.Replace(".", string.Empty).Length;
         }
@@ -61,7 +61,7 @@ namespace Austin.Net
         /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static Stream DownloadStream(string address)
+        public Stream DownloadStream(string address)
         {
             return DownloadStream(new Uri(address));
         }
@@ -73,7 +73,7 @@ namespace Austin.Net
         /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static Stream DownloadStream(Uri address)
+        public Stream DownloadStream(Uri address)
         {
             return DownloadStream(new DownloadRequest(address));
         }
@@ -85,7 +85,7 @@ namespace Austin.Net
         /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static Stream DownloadStream(DownloadRequest request)
+        public Stream DownloadStream(DownloadRequest request)
         {
             HttpWebRequest req = GetRequest(request);
             HttpWebResponse res = (HttpWebResponse)req.GetResponse();
@@ -108,7 +108,7 @@ namespace Austin.Net
         /// <param name="address">A <see cref="System.String"/> containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static byte[] DownloadData(string address)
+        public byte[] DownloadData(string address)
         {
             return DownloadData(new Uri(address));
         }
@@ -120,7 +120,7 @@ namespace Austin.Net
         /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static byte[] DownloadData(Uri address)
+        public byte[] DownloadData(Uri address)
         {
             return DownloadData(new DownloadRequest(address));
         }
@@ -132,7 +132,7 @@ namespace Austin.Net
         /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static byte[] DownloadData(DownloadRequest request)
+        public byte[] DownloadData(DownloadRequest request)
         {
             HttpWebRequest req = GetRequest(request);
             return GetData(request, req);
@@ -140,9 +140,6 @@ namespace Austin.Net
         #endregion
 
         #region DownloadString
-        //private static Dictionary<string, CacheEntry<string>> downloadStringCache = new Dictionary<string, CacheEntry<string>>(StringComparer.OrdinalIgnoreCase);
-        //private static DateTime lastStringCacheCleaning = DateTime.Now;
-
         /// <summary>
         /// Downloads the specified resource as a <see cref="System.String"/>.
         /// </summary>
@@ -150,7 +147,7 @@ namespace Austin.Net
         /// <param name="address">A <see cref="System.String"/> containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static string DownloadString(string address)
+        public string DownloadString(string address)
         {
             return DownloadString(new Uri(address));
         }
@@ -162,7 +159,7 @@ namespace Austin.Net
         /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static string DownloadString(Uri address)
+        public string DownloadString(Uri address)
         {
             return DownloadString(new DownloadRequest(address));
         }
@@ -174,7 +171,7 @@ namespace Austin.Net
         /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public static string DownloadString(DownloadRequest request)
+        public string DownloadString(DownloadRequest request)
         {
             //download the data
             HttpWebRequest req = GetRequest(request);
@@ -187,13 +184,16 @@ namespace Austin.Net
 
         #region Helper
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private static HttpWebRequest GetRequest(DownloadRequest request)
+        private HttpWebRequest GetRequest(DownloadRequest request)
         {
+            // transform the URL.
+            Uri transformedUrl = this.TransformUrl(request.Address);
+
             //exit if it is in the blacklist
-            if (isInBlackList(request.Address))
+            if (isInBlackList(transformedUrl))
                 throw new ArgumentException("The address in in the blacklist.");
 
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(request.Address);
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(transformedUrl);
             req.Timeout = request.Timeout;
 
             //add headers
@@ -233,7 +233,7 @@ namespace Austin.Net
             return req;
         }
 
-        private static byte[] GetData(DownloadRequest down, HttpWebResponse res)
+        private byte[] GetData(DownloadRequest down, HttpWebResponse res)
         {
             if (down.SaveCookiesReturnedByServer)
             {
@@ -261,13 +261,13 @@ namespace Austin.Net
             return bytes.ToArray();
         }
 
-        private static byte[] GetData(DownloadRequest down, HttpWebRequest req)
+        private byte[] GetData(DownloadRequest down, HttpWebRequest req)
         {
             return GetData(down, (HttpWebResponse)req.GetResponse());
         }
 
         //from System.Net.WebClient
-        private static Encoding GuessDownloadEncoding(HttpWebRequest request)
+        private Encoding GuessDownloadEncoding(HttpWebRequest request)
         {
             try
             {
@@ -305,9 +305,9 @@ namespace Austin.Net
         #endregion
 
         #region Blacklist
-        private static List<Uri> m_blacklist = new List<Uri>();
+        private List<Uri> m_blacklist = new List<Uri>();
 
-        private static bool isInBlackList(Uri url)
+        private bool isInBlackList(Uri url)
         {
             bool ret = false;
             Monitor.Enter(sync);
@@ -323,7 +323,7 @@ namespace Austin.Net
         /// Adds a URL to the blacklist that so that it won't be downloaded again.
         /// </summary>
         /// <param name="url">The URL to be blacklist.</param>
-        public static void AddToBlacklist(Uri url)
+        public void AddToBlacklist(Uri url)
         {
             if (isInBlackList(url))
                 return;

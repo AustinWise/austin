@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F9BA4CE1-536E-42A4-BBB7-5F43EF2EEAD9}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -61,6 +61,7 @@
     <Compile Include="Net\HttpServerMethodAttribute.cs" />
     <Compile Include="Net\HttpServerMethodParameter.cs" />
     <Compile Include="Net\HttpServerMethodParameterType.cs" />
+    <Compile Include="Net\IDownloadManager.cs" />
     <Compile Include="Net\PLATFORM_ID.cs" />
     <Compile Include="Net\SERVER_INFO_101.cs" />
     <Compile Include="Net\Share.cs" />

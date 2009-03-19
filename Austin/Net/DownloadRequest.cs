@@ -18,7 +18,7 @@ namespace Austin.Net
 		/// <param name="address">The <see cref="System.Uri"/> of the resource to be downloaded.</param>
 		public DownloadRequest(Uri address)
 		{
-			m_address = DownloadManager.TransformUrl(address);
+            this.m_address = address;
 		}
 
 		internal string UserAgent
