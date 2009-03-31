@@ -10,7 +10,7 @@ namespace Austin.Net
 	/// <summary>
 	/// Provide instructions on how to download the specified resource.
 	/// </summary>
-	public sealed class DownloadRequest
+	public class DownloadRequest
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Austin.Security.Cryptography.Hash"></see> class from the specified <see cref="System.Byte"/> array.
