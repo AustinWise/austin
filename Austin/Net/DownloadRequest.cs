@@ -21,7 +21,7 @@ namespace Austin.Net
             this.m_address = address;
 		}
 
-		internal string UserAgent
+		public virtual string UserAgent
 		{
 			get
 			{
