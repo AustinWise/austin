@@ -8,7 +8,8 @@ using System.Threading;
 namespace Austin.Net
 {
     /// <summary>
-    /// Provides an abstract way to download data.
+    /// An implementation of <see cref="IDownloadManager"/> that
+    /// uses <see cref="HttpWebRequest"/> to download data.
     /// </summary>
     public class DownloadManager : IDownloadManager
     {
@@ -204,6 +205,18 @@ namespace Austin.Net
             req.UserAgent = request.UserAgent;
             req.CookieContainer = cookies;
             req.AllowAutoRedirect = request.AllowAutoRedirect;
+            foreach (var kvp in request.m_headers)
+            {
+                switch (kvp.Key)
+                {
+                    case "Accept":
+                        req.Accept = kvp.Key;
+                        break;
+                    default:
+                        req.Headers.Add(kvp.Key, kvp.Value);
+                        break;
+                }
+            }
 
             //use a proxy if given
             if (request.Proxy != null)
@@ -336,5 +349,15 @@ namespace Austin.Net
             finally { Monitor.Exit(sync); }
         }
         #endregion
+
+        /// <summary>
+        /// Creates a new instace of <see cref="DownloadRequest"/>.
+        /// </summary>
+        /// <param name="address">The address to send the request to.</param>
+        /// <returns></returns>
+        public DownloadRequest CreateRequest(Uri address)
+        {
+            return new DownloadRequest(address);
+        }
     }
 }

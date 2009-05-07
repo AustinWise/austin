@@ -21,6 +21,9 @@ namespace Austin.Net
             this.m_address = address;
 		}
 
+        /// <summary>
+        /// The user agent that is sent to the server.
+        /// </summary>
 		public virtual string UserAgent
 		{
 			get
@@ -162,6 +165,16 @@ namespace Austin.Net
             set { m_proxy = value; }
         }
 
-	
+        internal Dictionary<string, string> m_headers = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Adds a header to be sent as part of the request.
+        /// </summary>
+        /// <param name="key">The name of the header.</param>
+        /// <param name="value">The value of the header.</param>
+        public void AddHeader(string key, string value)
+        {
+            this.m_headers.Add(key, value);
+        }
 	}
 }
