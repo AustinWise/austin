@@ -8,11 +8,11 @@ using System.Runtime.ConstrainedExecution;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Austin")]
-[assembly: AssemblyDescription("The Austin shared framework.")]
+[assembly: AssemblyDescription("Austin's varius handy classes.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Austin Inc.")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Austin")]
-[assembly: AssemblyCopyright("Copyright © Austin Inc. 2005")]
+[assembly: AssemblyCopyright("Copyright © Austin Wise 2005 - 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -26,9 +26,6 @@ using System.Runtime.ConstrainedExecution;
 
 // Tell the world that we are CLS compliant.
 [assembly: CLSCompliant(true)]
-
-//Do the ReliabilityContract this
-[assembly: ReliabilityContract(Consistency.MayCorruptProcess, Cer.None)]
 
 // Version information for an assembly consists of the following four values:
 //

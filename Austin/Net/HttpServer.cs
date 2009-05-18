@@ -112,7 +112,7 @@ namespace Austin.Net
         {
             get
             {
-                return new Uri("http://austinwise.homeip.net/?link=httpserver");
+                return new Uri("http://github.com/AustinWise/austin/");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Austin.Net
         {
             get
             {
-                return " 2005 Austin Inc.";
+                return "2005 - 2009";
             }
         }
         #endregion
@@ -336,7 +336,7 @@ namespace Austin.Net
             if (!this.m_functions.ContainsKey(methodName))
             {
                 WritePageStart(writer, this.ServerName);
-                WriteHeader(writer, this.ServerName, methodName);
+                WriteHeader(writer, this.ServerName, methodName, PathPrefix);
                 writer.WriteStartElement("div");
                 writer.WriteAttributeString("id", "content");
                 WriteError(writer, "Invaild function name.");
@@ -349,7 +349,7 @@ namespace Austin.Net
             if (method.CreatePageTemplate)
             {
                 WritePageStart(writer, this.ServerName);
-                WriteHeader(writer, this.ServerName, methodName);
+                WriteHeader(writer, this.ServerName, methodName, PathPrefix);
                 writer.WriteStartElement("div");
                 writer.WriteAttributeString("id", "content");
                 writeContent(method, query, writer);
@@ -371,8 +371,8 @@ namespace Austin.Net
         public static void WritePageStart(XmlWriter writer, string title)
         {
             writer.WriteStartDocument();
-            //writer.WriteDocType("html", "-//W3C//DTD XHTML 1.0 Strict//EN", "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd", null);
-            writer.WriteStartElement("html");//, "http://www.w3.org/1999/xhtml");
+            writer.WriteDocType("html", "-//W3C//DTD XHTML 1.0 Strict//EN", "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd", null);
+            writer.WriteStartElement("html", "http://www.w3.org/1999/xhtml");
 
             writer.WriteStartElement("head");
             writer.WriteElementString("title", title);
@@ -444,12 +444,19 @@ namespace Austin.Net
         /// <param name="writer">A <see cref="System.Xml.XmlWriter"/>.</param>
         /// <param name="title">The title of the page.</param>
         /// <param name="method">The name of the method.</param>
-        public static void WriteHeader(XmlWriter writer, string title, string method)
+        /// <param name="indexPagePath">The page to the index page.</param>
+        public static void WriteHeader(XmlWriter writer, string title, string method, string indexPagePath)
         {
             writer.WriteStartElement("div");
             writer.WriteAttributeString("id", "Header");
 
-            writer.WriteElementString("h1", title);
+            writer.WriteStartElement("h1");
+            writer.WriteStartElement("a");
+            writer.WriteAttributeString("href", indexPagePath);
+            writer.WriteString(title);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+
             writer.WriteElementString("h2", method.Replace("__", string.Empty));
 
             writer.WriteEndElement();
@@ -490,6 +497,7 @@ namespace Austin.Net
         private static void writeCopyright(XmlWriter writer)
         {
             writer.WriteString(new string(new char[] { (char)169 }));
+            writer.WriteString(" ");
             writer.WriteString(Copyright);
         }
         #endregion
