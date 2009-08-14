@@ -76,7 +76,7 @@ namespace Austin.Net
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public Stream DownloadStream(Uri address)
         {
-            return DownloadStream(new DownloadRequest(address));
+            return DownloadStream(CreateRequest(address));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Austin.Net
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public byte[] DownloadData(Uri address)
         {
-            return DownloadData(new DownloadRequest(address));
+            return DownloadData(CreateRequest(address));
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Austin.Net
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public string DownloadString(Uri address)
         {
-            return DownloadString(new DownloadRequest(address));
+            return DownloadString(CreateRequest(address));
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Austin.Net
         /// </summary>
         /// <param name="address">The address to send the request to.</param>
         /// <returns></returns>
-        public DownloadRequest CreateRequest(Uri address)
+        public virtual DownloadRequest CreateRequest(Uri address)
         {
             return new DownloadRequest(address);
         }
