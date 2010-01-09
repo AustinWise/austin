@@ -10,3 +10,4 @@ obj
 x86/*
 bin/*
 obj/*
+*.cache
