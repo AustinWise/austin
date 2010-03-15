@@ -177,7 +177,6 @@ namespace Austin.Net
         private bool m_isRunning;
         private Thread m_thread;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void pump()
         {
             while (m_isRunning)
@@ -239,7 +238,7 @@ namespace Austin.Net
         /// Shows all methods.
         /// </summary>
         /// <param name="writer">A <see cref="System.Xml.XmlWriter"/>.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores"), HttpServerMethod(true, false), CLSCompliant(false)]
+        [HttpServerMethod(true, false), CLSCompliant(false)]
         public void __Index(XmlWriter writer)
         {
             writer.WriteStartElement("ul");
@@ -263,7 +262,7 @@ namespace Austin.Net
         /// </summary>
         /// <param name="writer">A <see cref="System.Xml.XmlWriter"/>.</param>
         /// <param name="operation">The name of the method</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores"), HttpServerMethod(true, false), CLSCompliant(false)]
+        [HttpServerMethod(true, false), CLSCompliant(false)]
         public void __View(XmlWriter writer, string operation)
         {
             if (!this.m_functions.ContainsKey(operation))
@@ -396,7 +395,6 @@ namespace Austin.Net
             writer.WriteEndDocument();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void writeContent(HttpServerMethod method, NameValueCollection query, XmlWriter writer)
         {
             try

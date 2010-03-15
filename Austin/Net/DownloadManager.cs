@@ -184,7 +184,6 @@ namespace Austin.Net
         #endregion
 
         #region Helper
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private HttpWebRequest GetRequest(DownloadRequest request)
         {
             // transform the URL.

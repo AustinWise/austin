@@ -62,7 +62,6 @@ namespace Austin.Net
 		/// The URL to tell the server from where the request came from when downloading the resource represented by this
 		/// <see cref="Austin.Net.DownloadRequest"/> object.
 		/// </summary>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
 		public string Referer
 		{
 			get
