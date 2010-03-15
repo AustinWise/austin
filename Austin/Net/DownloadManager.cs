@@ -136,7 +136,8 @@ namespace Austin.Net
         public byte[] DownloadData(DownloadRequest request)
         {
             HttpWebRequest req = GetRequest(request);
-            return GetData(request, req);
+            string enc;
+            return GetData(request, req, out enc);
         }
         #endregion
 
@@ -176,8 +177,17 @@ namespace Austin.Net
         {
             //download the data
             HttpWebRequest req = GetRequest(request);
-            byte[] bytes = GetData(request, req);
-            string res = GuessDownloadEncoding(req).GetString(bytes);
+            string enc;
+            byte[] bytes = GetData(request, req, out enc);
+
+            Encoding encoding;
+            if (string.IsNullOrEmpty(enc))
+                encoding = Encoding.ASCII;
+            else
+                try { encoding = Encoding.GetEncoding(enc); }
+                catch (ArgumentException) { encoding = Encoding.ASCII; }
+
+            string res = encoding.GetString(bytes);
 
             return res;
         }
@@ -245,7 +255,7 @@ namespace Austin.Net
             return req;
         }
 
-        private byte[] GetData(DownloadRequest down, HttpWebResponse res)
+        private byte[] GetData(DownloadRequest down, HttpWebResponse res, out string encoding)
         {
             if (down.SaveCookiesReturnedByServer)
             {
@@ -260,6 +270,20 @@ namespace Austin.Net
             List<byte> bytes = new List<byte>();
             BinaryReader reader = new BinaryReader(s);
 
+            string type = res.Headers[HttpResponseHeader.ContentType];//Content-Type: text/html; charset=UTF-8
+            type = type.ToLowerInvariant();
+            int charsetIndex = type.IndexOf("charset=");
+            if (charsetIndex != -1)
+            {
+                encoding = type.Substring(charsetIndex + "charset=".Length);
+                charsetIndex = encoding.IndexOf(';');
+                if (charsetIndex != -1)
+                    encoding = encoding.Remove(charsetIndex);
+                encoding = encoding.Trim();
+            }
+            else
+                encoding = string.Empty;
+
             //suck all the bytes out of the stream
             byte[] buffer = reader.ReadBytes(100);
             while (buffer.Length > 0)
@@ -273,46 +297,9 @@ namespace Austin.Net
             return bytes.ToArray();
         }
 
-        private byte[] GetData(DownloadRequest down, HttpWebRequest req)
+        private byte[] GetData(DownloadRequest down, HttpWebRequest req, out string encoding)
         {
-            return GetData(down, (HttpWebResponse)req.GetResponse());
-        }
-
-        //from System.Net.WebClient
-        private Encoding GuessDownloadEncoding(HttpWebRequest request)
-        {
-            try
-            {
-                string text1;
-                if ((text1 = request.ContentType) == null)
-                {
-                    return Encoding.Default;
-                }
-                text1 = text1.ToLower(System.Globalization.CultureInfo.InvariantCulture);
-                string[] textArray1 = text1.Split(new char[3] { ';', '=', ' ' });
-                bool flag1 = false;
-                string[] textArray2 = textArray1;
-                for (int num1 = 0; num1 < textArray2.Length; num1++)
-                {
-                    string text2 = textArray2[num1];
-                    if (text2 == "charset")
-                    {
-                        flag1 = true;
-                    }
-                    else if (flag1)
-                    {
-                        return Encoding.GetEncoding(text2);
-                    }
-                }
-            }
-            catch (Exception exception1)
-            {
-                if (((exception1 is System.Threading.ThreadAbortException) || (exception1 is StackOverflowException)) || (exception1 is OutOfMemoryException))
-                {
-                    throw;
-                }
-            }
-            return Encoding.Default;
+            return GetData(down, (HttpWebResponse)req.GetResponse(), out encoding);
         }
         #endregion
 
