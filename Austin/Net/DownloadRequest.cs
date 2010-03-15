@@ -13,7 +13,8 @@ namespace Austin.Net
 	public class DownloadRequest
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Austin.Security.Cryptography.Hash"></see> class from the specified <see cref="System.Byte"/> array.
+		/// Creates a new instance of the <see cref="DownloadRequest"></see> class that
+		/// will be used to download the specified <see cref="System.Uri"/>.
 		/// </summary>
 		/// <param name="address">The <see cref="System.Uri"/> of the resource to be downloaded.</param>
 		public DownloadRequest(Uri address)
