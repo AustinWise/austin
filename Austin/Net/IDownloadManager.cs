@@ -98,6 +98,12 @@ namespace Austin.Net
         void AddToBlacklist(Uri url);
 
         /// <summary>
+        /// Adds a filter to be run after special cases.
+        /// </summary>
+        /// <param name="filter">The filter to add.</param>
+        void AddFilter(IDownloadRequestFilter filter);
+
+        /// <summary>
         /// Adds a special case to be used by <see cref="Austin.Net.DownloadManager.TransformUrl"/>.
         /// </summary>
         /// <param name="domain">The domain in which the <paramref name="specialCase"/> will apply.</param>

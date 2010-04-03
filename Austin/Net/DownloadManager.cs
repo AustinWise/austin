@@ -16,7 +16,7 @@ namespace Austin.Net
         private object sync = new object();
         private CookieContainer cookies = new CookieContainer();
 
-        #region Special Cases
+        #region Special Cases and Filters
         private Dictionary<string, UrlTransformation> m_spcialCases = new Dictionary<string, UrlTransformation>();
 
         /// <summary>
@@ -51,6 +51,16 @@ namespace Austin.Net
         private int periodCount(string str)
         {
             return str.Length - str.Replace(".", string.Empty).Length;
+        }
+
+        private List<IDownloadRequestFilter> filters = new List<IDownloadRequestFilter>();
+        /// <summary>
+        /// Adds a filter to be run after special cases.
+        /// </summary>
+        /// <param name="filter">The filter to add.</param>
+        public void AddFilter(IDownloadRequestFilter filter)
+        {
+            filters.Add(filter);
         }
         #endregion
 
@@ -198,6 +208,11 @@ namespace Austin.Net
         {
             // transform the URL.
             Uri transformedUrl = this.TransformUrl(request.Address);
+
+            foreach (var filter in filters)
+            {
+                filter.Process(request);
+            }
 
             //exit if it is in the blacklist
             if (isInBlackList(transformedUrl))

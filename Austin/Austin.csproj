@@ -41,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -59,6 +60,7 @@
     <Compile Include="Net\HttpServerMethodParameter.cs" />
     <Compile Include="Net\HttpServerMethodParameterType.cs" />
     <Compile Include="Net\IDownloadManager.cs" />
+    <Compile Include="Net\IDownloadRequestFilter.cs" />
     <Compile Include="Net\UrlTransformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
