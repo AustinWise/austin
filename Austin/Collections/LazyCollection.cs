@@ -24,9 +24,9 @@ namespace Austin.Collections
 
         private TSource[] sources;
         private T[] values;
+        private Exception[] exceptions;
         private object[] locks;
         private LazyLoad loader;
-        private Thread thread;
         private bool isDisposed = false;
 
         /// <summary>
@@ -39,6 +39,7 @@ namespace Austin.Collections
             this.sources = new TSource[sources.Count];
             this.values = new T[sources.Count];
             this.locks = new object[sources.Count];
+            this.exceptions = new Exception[sources.Count];
             this.loader = loader;
             for (int i = 0; i < sources.Count; i++)
             {
@@ -47,8 +48,7 @@ namespace Austin.Collections
                 this.locks[i] = new object();
             }
 
-            this.thread = new Thread(threadFunc);
-            thread.Start();
+            ThreadPool.QueueUserWorkItem(threadFunc);
         }
 
         #region Public
@@ -102,13 +102,11 @@ namespace Austin.Collections
             return values[i] != null;
         }
 
-        private void threadFunc()
+        private void threadFunc(object unused)
         {
-            for (int i = 0; i < sources.Length; i++)
+            for (int i = 0; i < sources.Length && !isDisposed; i++)
             {
                 load(i);
-                if (isDisposed)
-                    return;
             }
         }
 

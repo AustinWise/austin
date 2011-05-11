@@ -18,6 +18,18 @@ namespace Austin.Net
 		{
 		}
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Austin.Net.HttpServerMethodAttribute"/> class that uses no template
+        /// and has a custom content type.
+        /// </summary>
+        /// <param name="customContentType">The MIME type of the response.</param>
+        public HttpServerMethodAttribute(string customContentType)
+            : this()
+        {
+            this.m_customContentType = customContentType;
+            this.m_createPageTemplate = false;
+        }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Austin.Net.HttpServerMethodAttribute"/> class.
 		/// </summary>
@@ -66,5 +78,17 @@ namespace Austin.Net
 				return this.m_createPageTemplate;
 			}
 		}
+
+        private string m_customContentType = null;
+        /// <summary>
+        /// The MIME type of the response.
+        /// </summary>
+        public string CustomContentType
+        {
+            get
+            {
+                return this.m_customContentType;
+            }
+        }
 	}
 }

@@ -139,6 +139,7 @@ namespace Austin.Net
                 throw new HttpServerException("Failed to start server.", ex);
             }
             m_thread = new Thread(pump);
+            m_thread.IsBackground = true;
             m_thread.Start();
         }
 
@@ -195,7 +196,7 @@ namespace Austin.Net
 
                 if (!(req.Url.AbsolutePath.StartsWith(this.PathPrefix)))
                 {
-                    res.ContentType = MediaTypeNames.Text.Html;
+                    res.ContentType = MediaTypeNames.Text.Html + "; charset=" + encoding.WebName;
                     XmlWriter wr = XmlWriter.Create(res.OutputStream, CreateSettings(ConformanceLevel.Document));
                     WritePageStart(wr, ServerType);
                     WriteError(wr, "No server confirgured at this address.");
@@ -214,13 +215,13 @@ namespace Austin.Net
 
                     if (function == "__Styles")
                     {
-                        res.ContentType = "text/css";
+                        res.ContentType = "text/css" + "; charset=" + encoding.WebName;
                         byte[] styleBytes = encoding.GetBytes(Styles);
                         res.OutputStream.Write(styleBytes, 0, styleBytes.Length);
                     }
                     else
                     {
-                        res.ContentType = MediaTypeNames.Text.Html;
+                        res.ContentType = (m_functions.ContainsKey(function) ? m_functions[function].ContentType : MediaTypeNames.Text.Html) + "; charset=" + encoding.WebName;
                         XmlWriter wr = XmlWriter.Create(res.OutputStream, CreateSettings(ConformanceLevel.Document));
                         writePage(function, parameters, wr);
                         wr.Close();
@@ -323,6 +324,7 @@ namespace Austin.Net
             settings.ConformanceLevel = conformanceLevel;
             settings.Encoding = encoding;
             settings.Indent = true;
+            settings.OmitXmlDeclaration = true;
             return settings;
         }
         #endregion
@@ -367,9 +369,9 @@ namespace Austin.Net
         /// <param name="title">The title of the page.</param>
         public static void WritePageStart(XmlWriter writer, string title)
         {
-            writer.WriteStartDocument();
-            writer.WriteDocType("html", "-//W3C//DTD XHTML 1.0 Strict//EN", "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd", null);
-            writer.WriteStartElement("html", "http://www.w3.org/1999/xhtml");
+            //writer.WriteStartDocument();
+            //writer.WriteDocType("html", null, null, null);
+            writer.WriteStartElement("html");
 
             writer.WriteStartElement("head");
             writer.WriteElementString("title", title);

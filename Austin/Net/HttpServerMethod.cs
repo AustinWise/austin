@@ -35,12 +35,14 @@ namespace Austin.Net
 			this.m_name = m.Name;
 			this.m_showInIndex = a.ShowInIndex;
 			this.m_createPageTemplate = a.CreatePageTemplate;
+            this.m_contentType = a.CustomContentType ?? System.Net.Mime.MediaTypeNames.Text.Html;
 		}
 
 		private bool m_showInIndex;
 		private MethodInfo m_method;
 		private string m_name;
 		private bool m_createPageTemplate;
+        private string m_contentType;
 		private List<HttpServerMethodParameter> m_parameters = new List<HttpServerMethodParameter>();
 
 
@@ -85,5 +87,13 @@ namespace Austin.Net
 				return this.m_createPageTemplate;
 			}
 		}
+
+        public string ContentType
+        {
+            get
+            {
+                return this.m_contentType;
+            }
+        }
 	}
 }
