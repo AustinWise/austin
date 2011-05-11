@@ -98,16 +98,10 @@ namespace Austin.Net
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public Stream DownloadStream(DownloadRequest request)
         {
-            HttpWebRequest req = GetRequest(request);
-            HttpWebResponse res = (HttpWebResponse)req.GetResponse();
-            if (request.SaveCookiesReturnedByServer)
-            {
-                foreach (Cookie cook in res.Cookies)
-                {
-                    cookies.Add(cook);
-                }
-            }
-            return res.GetResponseStream();
+            HttpWebRequest req = CreateRequest(request);
+            string encoding;
+            long length;
+            return GetData(request, req, out encoding, out length);
         }
         #endregion
 
@@ -127,7 +121,7 @@ namespace Austin.Net
         /// <summary>
         /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
         /// </summary>
-        /// <returns>>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
+        /// <returns>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
         /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
@@ -139,15 +133,32 @@ namespace Austin.Net
         /// <summary>
         /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
         /// </summary>
-        /// <returns>>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
+        /// <returns>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
         /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public byte[] DownloadData(DownloadRequest request)
         {
-            HttpWebRequest req = GetRequest(request);
+            HttpWebRequest req = CreateRequest(request);
             string enc;
-            return GetData(request, req, out enc);
+            long length;
+            var s = GetData(request, req, out enc, out length);
+            
+            var ms = new MemoryStream((int)length);
+
+            var buffer = new byte[1024];
+            int read;
+            while ((read = s.Read(buffer, 0, 1024)) > 0)
+            {
+                ms.Write(buffer, 0, read);
+            }
+
+            s.Close();
+
+            if (ms.Length == length)
+                return ms.GetBuffer();
+            else
+                return ms.ToArray();
         }
         #endregion
 
@@ -186,25 +197,34 @@ namespace Austin.Net
         public string DownloadString(DownloadRequest request)
         {
             //download the data
-            HttpWebRequest req = GetRequest(request);
+            HttpWebRequest req = CreateRequest(request);
             string enc;
-            byte[] bytes = GetData(request, req, out enc);
+            long contentLength;
+            Stream bytes = GetData(request, req, out enc, out contentLength);
 
             Encoding encoding;
             if (string.IsNullOrEmpty(enc))
-                encoding = Encoding.ASCII;
+                encoding = null;
             else
                 try { encoding = Encoding.GetEncoding(enc); }
-                catch (ArgumentException) { encoding = Encoding.ASCII; }
+                catch (ArgumentException) { encoding = null; }
 
-            string res = encoding.GetString(bytes);
+            StreamReader sr;
+            if (encoding == null)
+                sr = new StreamReader(bytes);
+            else
+                sr = new StreamReader(bytes, encoding);
+
+            string res = sr.ReadToEnd();
+
+            sr.Close();
 
             return res;
         }
         #endregion
 
         #region Helper
-        private HttpWebRequest GetRequest(DownloadRequest request)
+        private HttpWebRequest CreateRequest(DownloadRequest request)
         {
             // transform the URL.
             Uri transformedUrl = this.TransformUrl(request.Address);
@@ -270,7 +290,7 @@ namespace Austin.Net
             return req;
         }
 
-        private byte[] GetData(DownloadRequest down, HttpWebResponse res, out string encoding)
+        private Stream GetData(DownloadRequest down, HttpWebResponse res, out string encoding, out long contentLength)
         {
             if (down.SaveCookiesReturnedByServer)
             {
@@ -280,12 +300,10 @@ namespace Austin.Net
                 }
             }
 
-            //get the response and setup readers
             Stream s = res.GetResponseStream();
-            List<byte> bytes = new List<byte>();
-            BinaryReader reader = new BinaryReader(s);
 
-            string type = res.Headers[HttpResponseHeader.ContentType];//Content-Type: text/html; charset=UTF-8
+            //try to get content type
+            string type = res.ContentType; //Content-Type: text/html; charset=UTF-8
             type = type.ToLowerInvariant();
             int charsetIndex = type.IndexOf("charset=");
             if (charsetIndex != -1)
@@ -299,22 +317,15 @@ namespace Austin.Net
             else
                 encoding = string.Empty;
 
-            //suck all the bytes out of the stream
-            byte[] buffer = reader.ReadBytes(100);
-            while (buffer.Length > 0)
-            {
-                bytes.AddRange(buffer);
-                buffer = reader.ReadBytes(100);
-            }
-            reader.Close();
+            //try to get content length
+            contentLength = res.ContentLength;
 
-            //return data
-            return bytes.ToArray();
+            return s;
         }
 
-        private byte[] GetData(DownloadRequest down, HttpWebRequest req, out string encoding)
+        private Stream GetData(DownloadRequest down, HttpWebRequest req, out string encoding, out long contentLength)
         {
-            return GetData(down, (HttpWebResponse)req.GetResponse(), out encoding);
+            return GetData(down, (HttpWebResponse)req.GetResponse(), out encoding, out contentLength);
         }
         #endregion
 
