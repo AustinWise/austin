@@ -7,163 +7,109 @@ using System.Globalization;
 
 namespace Austin.Net
 {
-	/// <summary>
-	/// Provide instructions on how to download the specified resource.
-	/// </summary>
-	public class DownloadRequest
-	{
-		/// <summary>
-		/// Creates a new instance of the <see cref="DownloadRequest"></see> class that
-		/// will be used to download the specified <see cref="System.Uri"/>.
-		/// </summary>
-		/// <param name="address">The <see cref="System.Uri"/> of the resource to be downloaded.</param>
-		public DownloadRequest(Uri address)
-		{
-            this.m_address = address;
-		}
+    /// <summary>
+    /// Provide instructions on how to download the specified resource.
+    /// </summary>
+    public class DownloadRequest
+    {
+        /// <summary>
+        /// Creates a new instance of the <see cref="DownloadRequest"></see> class that
+        /// will be used to download the specified <see cref="System.Uri"/>.
+        /// </summary>
+        /// <param name="address">The <see cref="System.Uri"/> of the resource to be downloaded.</param>
+        /// <param name="ct">A token to cancel this request.</param>
+        public DownloadRequest(Uri address, CancellationToken ct)
+        {
+            this.Address = address;
+            this.Timeout = 7500;
+            this.PostValues = new Dictionary<string, string>();
+            this.AllowAutoRedirect = true;
+            this.m_CancellationToken = ct;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="DownloadRequest"></see> class that
+        /// will be used to download the specified <see cref="System.Uri"/>.
+        /// </summary>
+        /// <param name="address">The <see cref="System.Uri"/> of the resource to be downloaded.</param>
+        public DownloadRequest(Uri address)
+            : this(address, CancellationToken.None)
+        {
+        }
 
         /// <summary>
         /// The user agent that is sent to the server.
         /// </summary>
-		public virtual string UserAgent
-		{
-			get
-			{
-				string userAgent = "DownloadManager/" + this.GetType().Assembly.GetName().Version.ToString() + " (compatible; {0}; .NET CLR " + Environment.Version.ToString() + ")";
-				switch (Environment.OSVersion.Platform)
-				{
-					case PlatformID.Win32NT:
-                        userAgent = string.Format(CultureInfo.InvariantCulture, userAgent, "Windows; Windows NT " + Environment.OSVersion.Version.ToString());
-						break;
-					case PlatformID.Win32Windows:
-                        userAgent = string.Format(CultureInfo.InvariantCulture, userAgent, "Windows; Windows 9X");
-						break;
-					default:
-						userAgent = string.Format(CultureInfo.InvariantCulture, userAgent, Environment.OSVersion.Platform.ToString());
-						break;
-				}
-				return userAgent;
-			}
-		}
-
-		private Uri m_address;
-		/// <summary>
-		/// The <see cref="System.Uri"/> of the resource to be downloaded.
-		/// </summary>
-		public Uri Address
-		{
-			get
-			{
-				return m_address;
-			}
-		}
-
-		private string m_referer = string.Empty;
-		/// <summary>
-		/// The URL to tell the server from where the request came from when downloading the resource represented by this
-		/// <see cref="Austin.Net.DownloadRequest"/> object.
-		/// </summary>
-		public string Referer
-		{
-			get
-			{
-				return m_referer;
-			}
-			set
-			{
-				m_referer = value;
-			}
-		}
-
-		private ICredentials m_credentials;
-		/// <summary>
-		/// The <see cref="System.Net.ICredentials"/> to use when downloading the resource represented by this
-		/// <see cref="Austin.Net.DownloadRequest"/> object.
-		/// </summary>
-		public ICredentials Credentials
-		{
-			get
-			{
-				return m_credentials;
-			}
-			set
-			{
-				m_credentials = value;
-			}
-		}
-
-		private int m_timeout = 7500;
-		/// <summary>
-		/// The amount of time to wait be fore a request is aborted.
-		/// </summary>
-		/// <value>The length of the timeout in miliseconds</value>
-		public int Timeout
-		{
-			get
-			{
-				return m_timeout;
-			}
-			set
-			{
-				m_timeout = value;
-			}
-		}
-
-        private bool m_shouldCache;
-        /// <summary>
-        /// Determines whether or not the result of this request will be cached in memory.
-        /// </summary>
-        public bool ShouldCache
+        public virtual string UserAgent
         {
             get
             {
-                return this.m_shouldCache;
-            }
-            set
-            {
-                this.m_shouldCache = value;
+                string userAgent = "DownloadManager/" + this.GetType().Assembly.GetName().Version.ToString() + " (compatible; {0}; .NET CLR " + Environment.Version.ToString() + ")";
+                switch (Environment.OSVersion.Platform)
+                {
+                    case PlatformID.Win32NT:
+                        userAgent = string.Format(CultureInfo.InvariantCulture, userAgent, "Windows; Windows NT " + Environment.OSVersion.Version.ToString());
+                        break;
+                    case PlatformID.Win32Windows:
+                        userAgent = string.Format(CultureInfo.InvariantCulture, userAgent, "Windows; Windows 9X");
+                        break;
+                    default:
+                        userAgent = string.Format(CultureInfo.InvariantCulture, userAgent, Environment.OSVersion.Platform.ToString());
+                        break;
+                }
+                return userAgent;
             }
         }
 
-        private bool m_saveCookies = false;
+        internal CancellationToken m_CancellationToken;
+
+        /// <summary>
+        /// The <see cref="System.Uri"/> of the resource to be downloaded.
+        /// </summary>
+        public Uri Address { get; private set; }
+
+        /// <summary>
+        /// The URL to tell the server from where the request came from when downloading the resource represented by this
+        /// <see cref="Austin.Net.DownloadRequest"/> object.
+        /// </summary>
+        public string Referer { get; set; }
+
+        /// <summary>
+        /// The <see cref="System.Net.ICredentials"/> to use when downloading the resource represented by this
+        /// <see cref="Austin.Net.DownloadRequest"/> object.
+        /// </summary>
+        public ICredentials Credentials { get; set; }
+
+        /// <summary>
+        /// The amount of time to wait be fore a request is aborted.
+        /// </summary>
+        /// <value>The length of the timeout in miliseconds</value>
+        public int Timeout { get; set; }
+
+        /// <summary>
+        /// Determines whether or not the result of this request will be cached in memory.
+        /// </summary>
+        public bool ShouldCache { get; set; }
+
         /// <summary>
         /// Determines whether cookies from the server will be reused in other requests.
         /// </summary>
-        public bool SaveCookiesReturnedByServer
-        {
-            get { return m_saveCookies; }
-            set { m_saveCookies = value; }
-        }
+        public bool SaveCookiesReturnedByServer { get; set; }
 
-        private Dictionary<string, string> m_postValues = new Dictionary<string, string>();
         /// <summary>
         /// Data to send to the server as application/x-www-form-urlencoded.
         /// </summary>
-        public Dictionary<string,string> PostValues
-        {
-            get { return m_postValues; }
-            set { m_postValues = value; }
-        }
+        public Dictionary<string, string> PostValues { get; private set; }
 
-        private bool m_allowAutoRedirect = true;
         /// <summary>
         /// Gets or sets a value that indicates whether the request should follow redirection responses.
         /// </summary>
-        public bool AllowAutoRedirect
-        {
-            get { return m_allowAutoRedirect; }
-            set { m_allowAutoRedirect = value; }
-        }
+        public bool AllowAutoRedirect { get; set; }
 
-        private WebProxy m_proxy;
         /// <summary>
         /// A web proxy to use.
         /// </summary>
-        public WebProxy Proxy
-        {
-            get { return m_proxy; }
-            set { m_proxy = value; }
-        }
+        public WebProxy Proxy { get; set; }
 
         internal Dictionary<string, string> m_headers = new Dictionary<string, string>();
 
@@ -176,5 +122,5 @@ namespace Austin.Net
         {
             this.m_headers.Add(key, value);
         }
-	}
+    }
 }

@@ -35,6 +35,17 @@ namespace Austin.Collections
         /// <param name="sources">Sources to be passed to <paramref name="loader"/></param>.
         /// <param name="loader">A method that will load each object.</param>
         public LazyCollection(IList<TSource> sources, LazyLoad loader)
+            : this(sources, loader, CancellationToken.None)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new LazyCollection.
+        /// </summary>
+        /// <param name="sources">Sources to be passed to <paramref name="loader"/></param>.
+        /// <param name="loader">A method that will load each object.</param>
+        /// <param name="ct">A token to cancel background loading.</param>
+        public LazyCollection(IList<TSource> sources, LazyLoad loader, CancellationToken ct)
         {
             this.sources = new TSource[sources.Count];
             this.values = new T[sources.Count];
@@ -49,6 +60,8 @@ namespace Austin.Collections
             }
 
             ThreadPool.QueueUserWorkItem(threadFunc);
+
+            ct.Register(() => this.isDisposed = true);
         }
 
         #region Public
@@ -94,7 +107,6 @@ namespace Austin.Collections
             this.isDisposed = true;
         }
         #endregion
-
 
         #region Private
         private bool hasValue(int i)

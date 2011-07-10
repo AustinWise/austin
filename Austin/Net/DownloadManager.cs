@@ -241,6 +241,9 @@ namespace Austin.Net
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(transformedUrl);
             req.Timeout = request.Timeout;
 
+            request.m_CancellationToken.Register(() => req.Abort());
+            request.m_CancellationToken.ThrowIfCancellationRequested();
+
             //add headers
             if (!string.IsNullOrEmpty(request.Referer))
                 req.Referer = request.Referer;
