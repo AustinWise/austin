@@ -143,7 +143,7 @@ namespace Austin.Net
             string enc;
             long length;
             var s = GetData(request, req, out enc, out length);
-            
+
             var ms = new MemoryStream((int)length);
 
             var buffer = new byte[1024];
@@ -337,14 +337,10 @@ namespace Austin.Net
 
         private bool isInBlackList(Uri url)
         {
-            bool ret = false;
-            Monitor.Enter(sync);
-            try
+            lock (sync)
             {
-                ret = m_blacklist.Contains(url);
+                return m_blacklist.Contains(url);
             }
-            finally { Monitor.Exit(sync); }
-            return ret;
         }
 
         /// <summary>
@@ -373,6 +369,17 @@ namespace Austin.Net
         public virtual DownloadRequest CreateRequest(Uri address)
         {
             return new DownloadRequest(address);
+        }
+
+        /// <summary>
+        /// Creates a new instace of <see cref="DownloadRequest"/>.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public DownloadRequest CreateRequest(Uri address, CancellationToken ct)
+        {
+            return new DownloadRequest(address, ct);
         }
     }
 }

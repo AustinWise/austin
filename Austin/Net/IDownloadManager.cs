@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace Austin.Net
 {
@@ -116,5 +117,13 @@ namespace Austin.Net
         /// <param name="address"></param>
         /// <returns></returns>
         DownloadRequest CreateRequest(Uri address);
+
+        /// <summary>
+        /// Creates a new instace of <see cref="DownloadRequest"/>.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        DownloadRequest CreateRequest(Uri address, CancellationToken ct);
     }
 }
