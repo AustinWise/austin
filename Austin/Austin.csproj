@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\InOrderPartitioner.cs" />
     <Compile Include="Collections\LazyCollection.cs" />
     <Compile Include="Net\Computer.cs" />
     <Compile Include="Net\DownloadManager.cs">

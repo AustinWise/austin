@@ -13,7 +13,7 @@ namespace Austin.Collections
     /// </summary>
     /// <typeparam name="T">The type of the collection.</typeparam>
     /// <typeparam name="TSource">The type of the source information.</typeparam>
-    public class LazyCollection<T, TSource> : ICollection<T>, IDisposable
+    public class LazyCollection<T, TSource> : IList<T>, IDisposable
     {
         /// <summary>
         /// A method that loads an object for a LazyCollection.
@@ -65,6 +65,25 @@ namespace Austin.Collections
         }
 
         #region Public
+        /// <summary>
+        /// Gets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
+        /// <exception cref="System.NotSupportedException">This list does not support setting.</exception>
+        public T this[int index]
+        {
+            get
+            {
+                load(index);
+                return values[index];
+            }
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
         /// <summary>
         /// The number of items in the collection.
         /// </summary>
@@ -225,6 +244,30 @@ namespace Austin.Collections
         /// NOT SUPPORTED!
         /// </summary>
         public bool Remove(T item)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <summary>
+        /// NOT SUPPORTED!
+        /// </summary>
+        public int IndexOf(T item)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <summary>
+        /// NOT SUPPORTED!
+        /// </summary>
+        public void Insert(int index, T item)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <summary>
+        /// NOT SUPPORTED!
+        /// </summary>
+        public void RemoveAt(int index)
         {
             throw new NotSupportedException();
         }
