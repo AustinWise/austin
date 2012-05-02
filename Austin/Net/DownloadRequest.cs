@@ -61,6 +61,7 @@ namespace Austin.Net
             }
         }
 
+        internal CancellationTokenRegistration m_RequestCanceler;
         internal CancellationToken m_CancellationToken;
 
         /// <summary>

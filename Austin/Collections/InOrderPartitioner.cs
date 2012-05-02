@@ -9,7 +9,7 @@ namespace Austin.Collections
 {
     /// <summary>
     /// An OrderablePartitioner that takes items from a list in order, instead of spliting the list into
-    /// chunks like the default paritioner.  Works with with a LazyCollection.
+    /// chunks like the default paritioner.  Works well with a LazyCollection.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class InOrderPartitioner<T> : OrderablePartitioner<T>

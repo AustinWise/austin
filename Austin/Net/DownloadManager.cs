@@ -98,10 +98,17 @@ namespace Austin.Net
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public Stream DownloadStream(DownloadRequest request)
         {
-            HttpWebRequest req = CreateRequest(request);
-            string encoding;
-            long length;
-            return GetData(request, req, out encoding, out length);
+            try
+            {
+                HttpWebRequest req = CreateRequest(request);
+                string encoding;
+                long length;
+                return GetData(request, req, out encoding, out length);
+            }
+            finally
+            {
+                request.m_RequestCanceler.Dispose();
+            }
         }
         #endregion
 
@@ -139,10 +146,18 @@ namespace Austin.Net
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public byte[] DownloadData(DownloadRequest request)
         {
-            HttpWebRequest req = CreateRequest(request);
             string enc;
             long length;
-            var s = GetData(request, req, out enc, out length);
+            Stream s;
+            try
+            {
+                HttpWebRequest req = CreateRequest(request);
+                s = GetData(request, req, out enc, out length);
+            }
+            finally
+            {
+                request.m_RequestCanceler.Dispose();
+            }
 
             var ms = new MemoryStream((int)length);
 
@@ -197,10 +212,18 @@ namespace Austin.Net
         public string DownloadString(DownloadRequest request)
         {
             //download the data
-            HttpWebRequest req = CreateRequest(request);
             string enc;
             long contentLength;
-            Stream bytes = GetData(request, req, out enc, out contentLength);
+            Stream bytes;
+            try
+            {
+                HttpWebRequest req = CreateRequest(request);
+                bytes = GetData(request, req, out enc, out contentLength);
+            }
+            finally
+            {
+                request.m_RequestCanceler.Dispose();
+            }
 
             Encoding encoding;
             if (string.IsNullOrEmpty(enc))
@@ -241,7 +264,7 @@ namespace Austin.Net
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(transformedUrl);
             req.Timeout = request.Timeout;
 
-            request.m_CancellationToken.Register(() => req.Abort());
+            request.m_RequestCanceler = request.m_CancellationToken.Register(() => req.Abort());
             request.m_CancellationToken.ThrowIfCancellationRequested();
 
             //add headers
