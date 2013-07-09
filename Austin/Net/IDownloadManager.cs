@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Threading;
 
@@ -11,85 +9,13 @@ namespace Austin.Net
     /// </summary>
     public interface IDownloadManager
     {
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.IO.Stream"/>.
-        /// </summary>
-        /// <param name="address">A <see cref="System.String"/> containing the URI to download.</param>
-        /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        Stream DownloadStream(string address);
-
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.IO.Stream"/>.
-        /// </summary>
-        /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
-        /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        Stream DownloadStream(Uri address);
-
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.IO.Stream"/>.
-        /// </summary>
-        /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
-        /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadStream"]/*'/>
         Stream DownloadStream(DownloadRequest request);
 
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
-        /// </summary>
-        /// <returns>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
-        /// <param name="address">A <see cref="System.String"/> containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        byte[] DownloadData(string address);
-
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
-        /// </summary>
-        /// <returns>>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
-        /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        byte[] DownloadData(Uri address);
-
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
-        /// </summary>
-        /// <returns>>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
-        /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadData"]/*'/>
         byte[] DownloadData(DownloadRequest request);
 
-        /// <summary>
-        /// Downloads the specified resource as a <see cref="System.String"/>.
-        /// </summary>
-        /// <returns>A String containing the specified resource.</returns>
-        /// <param name="address">A <see cref="System.String"/> containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        string DownloadString(string address);
-
-        /// <summary>
-        /// Downloads the specified resource as a <see cref="System.String"/>.
-        /// </summary>
-        /// <returns>A String containing the specified resource.</returns>
-        /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        string DownloadString(Uri address);
-
-        /// <summary>
-        /// Downloads the specified resource as a <see cref="System.String"/>.
-        /// </summary>
-        /// <returns>A String containing the specified resource.</returns>
-        /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadString"]/*'/>
         string DownloadString(DownloadRequest request);
 
         /// <summary>

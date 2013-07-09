@@ -12,6 +12,16 @@ namespace Austin.Net
     /// </summary>
     public class DownloadRequest
     {
+        private DownloadRequest(Uri address, CancellationToken ct, bool isImplicit)
+        {
+            this.Address = address;
+            this.Timeout = 7500;
+            this.PostValues = new Dictionary<string, string>();
+            this.AllowAutoRedirect = true;
+            this.m_CancellationToken = ct;
+            this.m_IsImplicit = isImplicit;
+        }
+
         /// <summary>
         /// Creates a new instance of the <see cref="DownloadRequest"></see> class that
         /// will be used to download the specified <see cref="System.Uri"/>.
@@ -19,12 +29,8 @@ namespace Austin.Net
         /// <param name="address">The <see cref="System.Uri"/> of the resource to be downloaded.</param>
         /// <param name="ct">A token to cancel this request.</param>
         public DownloadRequest(Uri address, CancellationToken ct)
+            : this(address, ct, false)
         {
-            this.Address = address;
-            this.Timeout = 7500;
-            this.PostValues = new Dictionary<string, string>();
-            this.AllowAutoRedirect = true;
-            this.m_CancellationToken = ct;
         }
 
         /// <summary>
@@ -61,6 +67,7 @@ namespace Austin.Net
             }
         }
 
+        internal bool m_IsImplicit;
         internal CancellationTokenRegistration m_RequestCanceler;
         internal CancellationToken m_CancellationToken;
 
@@ -122,6 +129,26 @@ namespace Austin.Net
         public void AddHeader(string key, string value)
         {
             this.m_headers.Add(key, value);
+        }
+
+        /// <summary>
+        /// Converts a string URL to <see cref="DownloadRequest"/>.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static implicit operator DownloadRequest(string url)
+        {
+            return new DownloadRequest(new Uri(url), CancellationToken.None, true);
+        }
+
+        /// <summary>
+        /// Converts a Uri to <see cref="DownloadRequest"/>.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static implicit operator DownloadRequest(Uri url)
+        {
+            return new DownloadRequest(url, CancellationToken.None, true);
         }
     }
 }

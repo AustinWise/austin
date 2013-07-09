@@ -68,36 +68,15 @@ namespace Austin.Net
         /// <summary>
         /// Downloads the resource with the specified URI as a <see cref="System.IO.Stream"/>.
         /// </summary>
-        /// <param name="address">A <see cref="System.String"/> containing the URI to download.</param>
-        /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public Stream DownloadStream(string address)
-        {
-            return DownloadStream(new Uri(address));
-        }
-
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.IO.Stream"/>.
-        /// </summary>
-        /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
-        /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public Stream DownloadStream(Uri address)
-        {
-            return DownloadStream(CreateRequest(address));
-        }
-
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.IO.Stream"/>.
-        /// </summary>
         /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
         /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public Stream DownloadStream(DownloadRequest request)
         {
+            if (request.m_IsImplicit)
+                request = CreateRequest(request.Address);
+
             try
             {
                 HttpWebRequest req = CreateRequest(request);
@@ -117,35 +96,14 @@ namespace Austin.Net
         /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
         /// </summary>
         /// <returns>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
-        /// <param name="address">A <see cref="System.String"/> containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public byte[] DownloadData(string address)
-        {
-            return DownloadData(new Uri(address));
-        }
-
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
-        /// </summary>
-        /// <returns>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
-        /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public byte[] DownloadData(Uri address)
-        {
-            return DownloadData(CreateRequest(address));
-        }
-
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
-        /// </summary>
-        /// <returns>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
         /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public byte[] DownloadData(DownloadRequest request)
         {
+            if (request.m_IsImplicit)
+                request = CreateRequest(request.Address);
+
             string enc;
             long length;
             Stream s;
@@ -182,35 +140,14 @@ namespace Austin.Net
         /// Downloads the specified resource as a <see cref="System.String"/>.
         /// </summary>
         /// <returns>A String containing the specified resource.</returns>
-        /// <param name="address">A <see cref="System.String"/> containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public string DownloadString(string address)
-        {
-            return DownloadString(new Uri(address));
-        }
-
-        /// <summary>
-        /// Downloads the specified resource as a <see cref="System.String"/>.
-        /// </summary>
-        /// <returns>A String containing the specified resource.</returns>
-        /// <param name="address">A <see cref="System.Uri"/> object containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public string DownloadString(Uri address)
-        {
-            return DownloadString(CreateRequest(address));
-        }
-
-        /// <summary>
-        /// Downloads the specified resource as a <see cref="System.String"/>.
-        /// </summary>
-        /// <returns>A String containing the specified resource.</returns>
         /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
         /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
         /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
         public string DownloadString(DownloadRequest request)
         {
+            if (request.m_IsImplicit)
+                request = CreateRequest(request.Address);
+
             //download the data
             string enc;
             long contentLength;
