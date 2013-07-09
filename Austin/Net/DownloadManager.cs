@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Austin.Net
 {
@@ -64,15 +65,16 @@ namespace Austin.Net
         }
         #endregion
 
+
         #region DownloadStream
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.IO.Stream"/>.
-        /// </summary>
-        /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
-        /// <returns>A <see cref="System.IO.Stream"/> containing the downloaded resource.</returns>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public Stream DownloadStream(DownloadRequest request)
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadStream"]/*'/>
+        public virtual Stream DownloadStream(DownloadRequest request)
+        {
+            return DownloadStreamAsync(request).Result;
+        }
+
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadStream"]/*'/>
+        public virtual async Task<Stream> DownloadStreamAsync(DownloadRequest request)
         {
             if (request.m_IsImplicit)
                 request = CreateRequest(request.Address);
@@ -80,9 +82,8 @@ namespace Austin.Net
             try
             {
                 HttpWebRequest req = CreateRequest(request);
-                string encoding;
-                long length;
-                return GetData(request, req, out encoding, out length);
+                var tup = await GetData(request, req);
+                return tup.Item1;
             }
             finally
             {
@@ -92,14 +93,14 @@ namespace Austin.Net
         #endregion
 
         #region DownloadData
-        /// <summary>
-        /// Downloads the resource with the specified URI as a <see cref="System.Byte"/> array.
-        /// </summary>
-        /// <returns>A <see cref="System.Byte"/> array containing the downloaded resource.</returns>
-        /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public byte[] DownloadData(DownloadRequest request)
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadData"]/*'/>
+        public virtual byte[] DownloadData(DownloadRequest request)
+        {
+            return DownloadDataAsync(request).Result;
+        }
+
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadData"]/*'/>
+        public virtual async Task<byte[]> DownloadDataAsync(DownloadRequest request)
         {
             if (request.m_IsImplicit)
                 request = CreateRequest(request.Address);
@@ -110,7 +111,10 @@ namespace Austin.Net
             try
             {
                 HttpWebRequest req = CreateRequest(request);
-                s = GetData(request, req, out enc, out length);
+                var tup = await GetData(request, req);
+                s = tup.Item1;
+                enc = tup.Item2;
+                length = tup.Item3;
             }
             finally
             {
@@ -136,14 +140,14 @@ namespace Austin.Net
         #endregion
 
         #region DownloadString
-        /// <summary>
-        /// Downloads the specified resource as a <see cref="System.String"/>.
-        /// </summary>
-        /// <returns>A String containing the specified resource.</returns>
-        /// <param name="request">A <see cref="Austin.Net.DownloadRequest"/> containing the URI to download.</param>
-        /// <exception cref="System.ArgumentException">The address is in the blacklist.</exception>
-        /// <exception cref="System.Net.WebException">The time-out period for the request expired.-or- An error occurred while processing the request.</exception>
-        public string DownloadString(DownloadRequest request)
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadString"]/*'/>
+        public virtual string DownloadString(DownloadRequest request)
+        {
+            return DownloadStringAsync(request).Result;
+        }
+
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadString"]/*'/>
+        public virtual async Task<string> DownloadStringAsync(DownloadRequest request)
         {
             if (request.m_IsImplicit)
                 request = CreateRequest(request.Address);
@@ -155,7 +159,10 @@ namespace Austin.Net
             try
             {
                 HttpWebRequest req = CreateRequest(request);
-                bytes = GetData(request, req, out enc, out contentLength);
+                var tup = await GetData(request, req);
+                bytes = tup.Item1;
+                enc = tup.Item2;
+                contentLength = tup.Item3;
             }
             finally
             {
@@ -286,9 +293,13 @@ namespace Austin.Net
             return s;
         }
 
-        private Stream GetData(DownloadRequest down, HttpWebRequest req, out string encoding, out long contentLength)
+        private async Task<Tuple<Stream, string, long>> GetData(DownloadRequest down, HttpWebRequest req)
         {
-            return GetData(down, (HttpWebResponse)req.GetResponse(), out encoding, out contentLength);
+            var webRes = await req.GetResponseAsync();
+            string encoding;
+            long contentLength;
+            var stream = GetData(down, (HttpWebResponse)webRes, out encoding, out contentLength);
+            return new Tuple<Stream, string, long>(stream, encoding, contentLength);
         }
         #endregion
 
@@ -337,7 +348,7 @@ namespace Austin.Net
         /// <param name="address"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        public DownloadRequest CreateRequest(Uri address, CancellationToken ct)
+        public virtual DownloadRequest CreateRequest(Uri address, CancellationToken ct)
         {
             return new DownloadRequest(address, ct);
         }

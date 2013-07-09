@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Austin.Net
 {
@@ -17,6 +18,15 @@ namespace Austin.Net
 
         /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadString"]/*'/>
         string DownloadString(DownloadRequest request);
+
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadStream"]/*'/>
+        Task<Stream> DownloadStreamAsync(DownloadRequest request);
+
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadData"]/*'/>
+        Task<byte[]> DownloadDataAsync(DownloadRequest request);
+
+        /// <include file='Doc.xml' path='/Doc/Method[@name="DownloadString"]/*'/>
+        Task<string> DownloadStringAsync(DownloadRequest request);
 
         /// <summary>
         /// Adds a URL to the blacklist that so that it won't be downloaded again.
